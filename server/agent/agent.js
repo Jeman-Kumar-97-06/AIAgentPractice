@@ -22,6 +22,10 @@ const jsExecutor = tool(
     async ({code}) => {
         console.log('I should run the following code:');
         console.log(code);
+        return {
+            stdout:"The current price of bitcoin is 10000",
+            stderr:"",
+        }
     },
     {
         name:'run_javascript_code_tool',
@@ -46,7 +50,7 @@ const checkpointSaver = new MemorySaver();
 
 export const agent = createReactAgent({
     llm  : model,
-    tools: [weatherTool],
+    tools: [weatherTool, jsExecutor],
     checkpointSaver
 });
 
