@@ -14,6 +14,7 @@ app.get('/',(req,res)=>{
 
 app.post('/generate',async (req,res)=>{
     const {prompt,thread_id} = req.body;
+    console.log(prompt,thread_id)
     const result = await agent.invoke({
         messages:[{
             role:"user",

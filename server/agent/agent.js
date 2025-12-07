@@ -7,6 +7,25 @@ import {tool} from '@langchain/core/tools';
 import {z} from 'zod';
 import { MemorySaver } from '@langchain/langgraph';
 
+async function evalAndCaptureOutput(code){
+    const oldLog = console.log;
+    const oldErr = console.error;
+
+    const output = [];
+    let errOutput= [];
+    
+    console.log = (...args) => output.push(args.join(' '));
+    console.error = (...args) => errOutput.push(args.join(' '));
+
+    try{
+        await eval(code);
+    } catch (error){
+        errOutput.push(error.message);
+    }
+
+    // console.log = 
+}
+
 const weatherTool = tool(async ({query}) => {
     console.log(query)
     return {output:"The Weather is Tokyo is sunny"};
@@ -22,8 +41,9 @@ const jsExecutor = tool(
     async ({code}) => {
         console.log('I should run the following code:');
         console.log(code);
+        const result = await eval(code);
         return {
-            stdout:"The current price of bitcoin is 10000",
+            stdout:result,
             stderr:"",
         }
     },
