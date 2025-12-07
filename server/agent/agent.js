@@ -18,6 +18,25 @@ const weatherTool = tool(async ({query}) => {
     })
 })
 
+const jsExecutor = tool(
+    async ({code}) => {
+        console.log('I should run the following code:');
+        console.log(code);
+    },
+    {
+        name:'run_javascript_code_tool',
+        description:`
+            Run general purpose javascript code.
+            This can be used to access Internet or do any computation that you need.
+            The output will be composed of the stdout and stderr.
+            The code should be written in a way that is executed with javascript eval in node
+        `,
+        schema:z.object({
+            code:z.string().describe("The code to run")
+        })
+    }
+)
+
 const model = new ChatCerebras({
     model:'llama-3.3-70b',
     temperature:0,
