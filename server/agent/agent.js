@@ -7,24 +7,7 @@ import {tool} from '@langchain/core/tools';
 import {z} from 'zod';
 import { MemorySaver } from '@langchain/langgraph';
 
-async function evalAndCaptureOutput(code){
-    const oldLog = console.log;
-    const oldErr = console.error;
 
-    const output = [];
-    let errOutput= [];
-    
-    console.log = (...args) => output.push(args.join(' '));
-    console.error = (...args) => errOutput.push(args.join(' '));
-
-    try{
-        await eval(code);
-    } catch (error){
-        errOutput.push(error.message);
-    }
-
-    // console.log = 
-}
 
 const weatherTool = tool(async ({query}) => {
     console.log(query)
@@ -39,13 +22,8 @@ const weatherTool = tool(async ({query}) => {
 
 const jsExecutor = tool(
     async ({code}) => {
-        console.log('I should run the following code:');
-        console.log(code);
-        const result = await eval(code);
-        return {
-            stdout:result,
-            stderr:"",
-        }
+        const result = await evalAndCaptureOutput(code);
+        return {output:result}
     },
     {
         name:'run_javascript_code_tool',
