@@ -7,8 +7,6 @@ import {tool} from '@langchain/core/tools';
 import {z} from 'zod';
 import { MemorySaver } from '@langchain/langgraph';
 
-
-
 const weatherTool = tool(async ({query}) => {
     console.log(query)
     return {output:"The Weather is Tokyo is sunny"};
@@ -22,7 +20,14 @@ const weatherTool = tool(async ({query}) => {
 
 const jsExecutor = tool(
     async ({code}) => {
-        const result = await evalAndCaptureOutput(code);
+        const resp   = await fetch(`${process.env.EXECUTOR_URL}`,{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify({code}),
+        })
+        const result = await resp.json();
         return {output:result}
     },
     {
