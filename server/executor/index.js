@@ -31,10 +31,9 @@ app.post('/',async (req,res)=>{
     const {code} = req.body;
     //Run the code:
     const result = await evalAndCaptureOutput(code);
-
     res.json(result);
 });
 
 app.listen(port,()=>{
     console.log(`Server is running at port: ${port}`);
-})
+});
