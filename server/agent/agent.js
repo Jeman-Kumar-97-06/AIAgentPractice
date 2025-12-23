@@ -1,5 +1,5 @@
 // const {createReactAgent} = require('@langchain/langgraph/prebuilt');
-// const {ChatCerebras}     = require('@langchain/cerebras')
+// const {ChatCerebras}     = require('@langchain/cerebras');
 
 import {createReactAgent} from '@langchain/langgraph/prebuilt';
 import {ChatCerebras} from '@langchain/cerebras';
