@@ -7,6 +7,12 @@ import {tool} from '@langchain/core/tools';
 import {z} from 'zod';
 import { MemorySaver } from '@langchain/langgraph';
 
+//A tool takes a function and an object : 
+//
+//The object tells,
+//  name of the tool
+//  description of the tool
+//  schema of the input and the input's description.
 const weatherTool = tool(async ({query}) => {
     console.log(query)
     return {output:"The Weather is Tokyo is sunny"};
@@ -18,6 +24,8 @@ const weatherTool = tool(async ({query}) => {
     })
 })
 
+//The following tool takes a function and and object:
+//  The function takes code and executes
 const jsExecutor = tool(
     async ({code}) => {
         const resp   = await fetch(`${process.env.EXECUTOR_URL}`,{
